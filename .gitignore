@@ -7,3 +7,5 @@
 /sample/ConsoleSample/obj
 /src/Serilog.Enrichers.ScopedLogContext/bin/Debug/net6.0
 /src/Serilog.Enrichers.ScopedLogContext/obj
+/sample/ASP.NETCore/bin/Debug/net6.0
+/sample/ASP.NETCore/obj

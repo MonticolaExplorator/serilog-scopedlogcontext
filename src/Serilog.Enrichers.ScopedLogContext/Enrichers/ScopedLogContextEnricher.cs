@@ -11,6 +11,5 @@ sealed class ScopedLogContextEnricher : ILogEventEnricher
         if (currentInstance != null)
             currentInstance.Enrich(logEvent, propertyFactory);
     }
-
 }
 
