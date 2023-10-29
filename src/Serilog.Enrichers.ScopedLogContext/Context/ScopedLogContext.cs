@@ -22,14 +22,19 @@ namespace Serilog.Context;
 public sealed class ScopedLogContext : IDisposable
 {
     private readonly ScopedLogContext? _under;
-    internal static AsyncLocal<ScopedLogContext?> _current = new();
+    internal static AsyncLocal<ScopedLogContextHolder?> _enricherStackAccessor = new() { Value = new ScopedLogContextHolder() };
     private EnricherStack? _data = null;
+    private readonly ScopedLogContextHolder _contextHolder;
 
     public ScopedLogContext()
     {
-        _under = _current.Value;
+        if (_enricherStackAccessor.Value == null)
+            _enricherStackAccessor.Value = new();
+
+        _contextHolder = _enricherStackAccessor.Value;
+        _under = _contextHolder!.ScopedLogContex;
         _data = _under?._data;
-        _current.Value = this;
+        _contextHolder!.ScopedLogContex = this;
 
     }
 
@@ -66,7 +71,7 @@ public sealed class ScopedLogContext : IDisposable
             throw new ArgumentNullException(nameof(enricher));
 
         var stack = GetOrCreateEnricherStack();
-        var bookmark = new ContextStackBookmark(stack);
+        var bookmark = new ContextStackBookmark(stack, _contextHolder);
 
         Enrichers = stack.Push(enricher);
 
@@ -89,7 +94,7 @@ public sealed class ScopedLogContext : IDisposable
             throw new ArgumentNullException(nameof(enrichers));
 
         var stack = GetOrCreateEnricherStack();
-        var bookmark = new ContextStackBookmark(stack);
+        var bookmark = new ContextStackBookmark(stack, _contextHolder);
 
         for (var i = 0; i < enrichers.Length; ++i)
             stack = stack.Push(enrichers[i]);
@@ -107,7 +112,7 @@ public sealed class ScopedLogContext : IDisposable
     public IDisposable Suspend()
     {
         var stack = GetOrCreateEnricherStack();
-        var bookmark = new ContextStackBookmark(stack);
+        var bookmark = new ContextStackBookmark(stack, _contextHolder);
 
         Enrichers = EnricherStack.Empty;
 
@@ -151,15 +156,16 @@ public sealed class ScopedLogContext : IDisposable
     sealed class ContextStackBookmark : IDisposable
     {
         readonly EnricherStack _bookmark;
-
-        public ContextStackBookmark(EnricherStack bookmark)
+        readonly ScopedLogContextHolder _contextHolder;
+        public ContextStackBookmark(EnricherStack bookmark, ScopedLogContextHolder contextHolder)
         {
             _bookmark = bookmark;
+            _contextHolder = contextHolder;
         }
 
         public void Dispose()
         {
-            var currentInstance = _current.Value;
+            var currentInstance = _contextHolder.ScopedLogContex;
             if (currentInstance != null)
                 currentInstance.Enrichers = _bookmark;
         }
@@ -173,7 +179,7 @@ public sealed class ScopedLogContext : IDisposable
 
     public void Dispose()
     {
-        _current.Value = _under;
+        _contextHolder.ScopedLogContex = _under;
     }
 }
 

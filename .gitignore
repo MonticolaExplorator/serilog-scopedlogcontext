@@ -9,3 +9,5 @@
 /src/Serilog.Enrichers.ScopedLogContext/obj
 /sample/ASP.NETCore/bin/Debug/net6.0
 /sample/ASP.NETCore/obj
+/test/Serilog.Enrichers.ScopedLogContext.Test/bin/Debug/net6.0
+/test/Serilog.Enrichers.ScopedLogContext.Test/obj

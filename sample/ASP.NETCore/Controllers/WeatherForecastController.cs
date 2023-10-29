@@ -32,9 +32,9 @@ namespace ASP.NETCore.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             };
             _requestLogContext.PushProperty("TomorrowForecast", forecast, destructureObjects: true);
-            //if (forecast.TemperatureC < -10)
+            if (forecast.TemperatureC < -10)
                 throw new Exception("It's going to be freezing cold!");
-            //return forecast;
+            return forecast;
         }
     }
 }
