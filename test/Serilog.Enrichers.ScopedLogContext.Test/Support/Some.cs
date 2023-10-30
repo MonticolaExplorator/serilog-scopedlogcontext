@@ -14,7 +14,7 @@ internal class Some
 
     public static int Int() => Interlocked.Increment(ref Counter);
 
-    public static string String(string tag = null) => (tag ?? "") + "__" + Int();
+    public static string String(string? tag = null) => (tag ?? "") + "__" + Int();
 
     public static TimeSpan TimeSpan() => System.TimeSpan.FromMinutes(Int());
 

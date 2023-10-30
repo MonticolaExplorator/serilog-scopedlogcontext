@@ -6,8 +6,8 @@ using Serilog.Events;
 namespace Serilog.Context;
 
 /// <summary>
-/// Similar to <see cref="Serilog.Context.LogContext"/>, except that it has a scoped lifecycle. Holds ambient properties that can be attached to log events. To
-/// configure, use the <see cref="Serilog.Configuration.LoggerEnrichmentConfiguration.FromScopedLogContext"/> method.
+/// Log context with a scoped lifecycle. Holds ambient properties that can be attached to log events. To
+/// configure, use the <see cref="Serilog.LoggerEnrichmentConfigurationExtensions.FromScopedLogContext"/> method.
 /// </summary>
 /// <example>
 /// Configuration:
@@ -26,6 +26,10 @@ public sealed class ScopedLogContext : IDisposable
     private EnricherStack? _data = null;
     private readonly ScopedLogContextHolder _contextHolder;
 
+    /// <summary>
+    /// Creates a new scoped log context.
+    /// </summary>
+    /// <remarks>Scoped log context can be nested</remarks>
     public ScopedLogContext()
     {
         if (_enricherStackAccessor.Value == null)
@@ -176,7 +180,9 @@ public sealed class ScopedLogContext : IDisposable
         get => _data;
         set => _data = value;
     }
-
+    /// <summary>
+    /// Disposes this instance
+    /// </summary>
     public void Dispose()
     {
         _contextHolder.ScopedLogContex = _under;

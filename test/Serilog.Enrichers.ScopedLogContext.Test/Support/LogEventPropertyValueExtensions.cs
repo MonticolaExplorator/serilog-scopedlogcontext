@@ -9,7 +9,7 @@ namespace Serilog.Enrichers.ScopedLogContext.Test.Support;
 
 internal static class LogEventPropertyValueExtensions
 {
-    public static object LiteralValue(this LogEventPropertyValue @this)
+    public static object? LiteralValue(this LogEventPropertyValue @this)
     {
         return ((ScalarValue)@this).Value;
     }
