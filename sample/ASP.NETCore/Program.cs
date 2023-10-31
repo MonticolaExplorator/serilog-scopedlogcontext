@@ -1,4 +1,5 @@
 using Serilog;
+using Serilog.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,10 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((ctx, cfg) =>
     cfg.Enrich.FromScopedLogContext()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties}{NewLine}{Exception}"))
-    .UseSerilogScopedLogContext();
+    .ConfigureServices(s=>s.AddScoped<ScopedLogContext>());
 
 builder.Services.AddControllers();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
