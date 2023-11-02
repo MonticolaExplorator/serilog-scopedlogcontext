@@ -220,8 +220,10 @@ public class ScopedLogContextTests
                 Assert.NotNull(lastEvent);
                 Assert.Empty(lastEvent!.Properties);
 
-                log.Write(Some.InformationEvent()); Assert.NotNull(lastEvent);
-                Assert.Empty(lastEvent!.Properties);
+                // Reset should only work for current async scope, outside of it previous Context
+                // instance should be available again.
+                log.Write(Some.InformationEvent());
+                Assert.Equal(1, lastEvent.Properties["A"].LiteralValue());
             }
         }
     }
