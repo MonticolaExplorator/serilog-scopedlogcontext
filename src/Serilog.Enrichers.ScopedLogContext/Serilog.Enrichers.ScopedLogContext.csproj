@@ -35,7 +35,7 @@
     <PackageTags>serilog;enricher;enrichers;scopedlogcontext;scoped-log-context;scopedcontext;scoped-context;logcontext;log-context;serilog-enricher;serilog-contrib</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>images\icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/serilog-contrib/serilog-enrichers-globallogcontext/master/assets/serilog-enrichers-globallogcontext-nuget.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/MonticolaExplorator/serilog-scopedlogcontext/main/asset/serilog-enrichers-scopedlogcontext-nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/MonticolaExplorator/serilog-scopedlogcontext</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/MonticolaExplorator/serilog-scopedlogcontext/releases</PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>

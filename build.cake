@@ -62,7 +62,7 @@ Task("pack")
     .IsDependentOn("test")
     .Does(() =>
 {
-    var releaseNotes = $"https://github.com/serilog-contrib/serilog-enrichers-globallogcontext/releases/tag/v{buildVersion.Version}";
+    var releaseNotes = $"https://github.com/MonticolaExplorator/serilog-scopedlogcontext/releases/tag/v{buildVersion.Version}";
 
     DotNetPack("./src/Serilog.Enrichers.ScopedLogContext/Serilog.Enrichers.ScopedLogContext.csproj", new DotNetPackSettings
     {
